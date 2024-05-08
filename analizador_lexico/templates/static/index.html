@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Lexico</title>
+</head>
+<body>
+    <h1>Analizador Lexico</h1>
+
+    <button type="button">Subir Archivos y Analizar</button> 
+    <br/>
+
+    
+
+    <textarea id="w3review" name="w3review" rows="4" cols="50">
+    Aqui ponga el texto a anallizar
+    </textarea> 
+    <br/>
+
+    <button type="button">Analizar codigo ingresado</button> 
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico</title>
+</head>
+<body>
+    <h1>Analizador Léxico</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="archivo">
+        <br>
+        <textarea name="codigo" rows="4" cols="50">Aquí ponga el texto a analizar</textarea> 
+        <br>
+        <button type="submit">Analizar</button>
+    </form>
+
+    {% if tokens %}
+<h2>Tokens encontrados:</h2>
+<ul>
+    {% for token in tokens %}
+    <li>{{ token }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+</body>
+</html>
