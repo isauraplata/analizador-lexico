@@ -6,4 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('analizador_lexico.urls')),
+    path('', include('analizador2.urls')),
+    path('', include('examen.urls')),
+    path('', include('analizador_lexico_sinonimos.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

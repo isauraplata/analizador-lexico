@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'analizador_lexico',
+    'analizador2',
+    'examen',
+    'analizador_lexico_sinonimos',
 ]
 
 MIDDLEWARE = [
@@ -124,5 +127,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
+
+
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
