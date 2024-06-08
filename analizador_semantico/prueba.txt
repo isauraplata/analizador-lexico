@@ -1,0 +1,26 @@
+correcto:
+for (int i = 0; i <= 10; i++) {
+    int j = 5;
+}
+
+
+sin Paréntesis:
+for (int i = 0; i <= 10; i++ {
+    int j = 5;
+}
+
+
+
+Variable No Declarada:
+for (i = 0; i <= 10; i++) {
+    int j = 5;
+}
+
+
+
+Validar que i este declarado afuera:
+int i;
+
+for (i = 0; i <= 10; i++) { 
+  int j = 5;
+}

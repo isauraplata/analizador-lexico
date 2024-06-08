@@ -9,4 +9,6 @@ urlpatterns = [
     path('', include('analizador2.urls')),
     path('', include('examen.urls')),
     path('', include('analizador_lexico_sinonimos.urls')),
+    path('', include('analizador_golang.urls')),
+    path('', include('analizador_semantico.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

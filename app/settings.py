@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'analizador2',
     'examen',
     'analizador_lexico_sinonimos',
+    'analizador_golang',
+    'analizador_semantico',
 ]
 
 MIDDLEWARE = [
