@@ -27,11 +27,11 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> PR_FOR LEFT_PAREN PR_INT ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE statement_list RIGHT_BRACE','statement',18,'p_statement','views.py',24),
-  ('statement -> PR_FOR LEFT_PAREN ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE statement_list RIGHT_BRACE','statement',17,'p_statement','views.py',25),
-  ('statement -> PR_FOR LEFT_PAREN PR_INT ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE RIGHT_BRACE','statement',17,'p_statement','views.py',26),
-  ('statement -> PR_FOR LEFT_PAREN ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE RIGHT_BRACE','statement',16,'p_statement','views.py',27),
-  ('statement_list -> statement','statement_list',1,'p_statement_list','views.py',31),
-  ('statement_list -> statement statement_list','statement_list',2,'p_statement_list','views.py',32),
-  ('statement -> <empty>','statement',0,'p_statement_empty','views.py',36),
+  ('statement -> PR_FOR LEFT_PAREN PR_INT ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE statement_list RIGHT_BRACE','statement',18,'p_statement','views.py',27),
+  ('statement -> PR_FOR LEFT_PAREN ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE statement_list RIGHT_BRACE','statement',17,'p_statement','views.py',28),
+  ('statement -> PR_FOR LEFT_PAREN PR_INT ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE RIGHT_BRACE','statement',17,'p_statement','views.py',29),
+  ('statement -> PR_FOR LEFT_PAREN ID EQUALS NUMBER SEMICOLON ID LESSTHANOREQUALS NUMBER SEMICOLON ID PLUS PLUS RIGHT_PAREN LEFT_BRACE RIGHT_BRACE','statement',16,'p_statement','views.py',30),
+  ('statement_list -> statement','statement_list',1,'p_statement_list','views.py',34),
+  ('statement_list -> statement statement_list','statement_list',2,'p_statement_list','views.py',35),
+  ('statement -> <empty>','statement',0,'p_statement_empty','views.py',39),
 ]

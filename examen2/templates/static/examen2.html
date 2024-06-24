@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de Pseudocódigo</title>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-4xl mt-10 bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Analizador Léxico, Sintáctico y Semántico de Pseudocódigo</h1>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label for="code" class="block text-center text-lg font-medium text-blue-700">Ingrese el pseudocódigo aquí:</label>
+                {{ form.code }}
+            </div>
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-md">Analizar</button>
+            </div>
+        </form>
+        
+        {% if tokens %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Resultados del Análisis Léxico</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white shadow-md rounded-lg">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-300">Tipo</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Valor</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Línea</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tipo, valor, linea in tokens %}
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ tipo }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ valor }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ linea }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Análisis Sintáctico</h2>
+            <p class="text-lg {% if es_valido_sintactico %}text-green-700{% else %}text-red-700{% endif %}">
+                {% if es_valido_sintactico %}
+                    Correcto
+                {% else %}
+                    Incorrecto
+                {% endif %}
+            </p>
+            {% if errores_sintacticos %}
+                <h3 class="text-xl font-bold text-gray-800 mt-4 mb-2">Errores Sintácticos:</h3>
+                <ul class="list-disc list-inside">
+                    {% for error in errores_sintacticos %}
+                        <li class="text-red-600">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Análisis Semántico</h2>
+            <p class="text-lg {% if es_valido_semantico %}text-green-700{% else %}text-red-700{% endif %}">
+                {% if es_valido_semantico %}
+                    Correcto
+                {% else %}
+                    Incorrecto
+                {% endif %}
+            </p>
+            {% if errores_semanticos %}
+                <h3 class="text-xl font-bold text-gray-800 mt-4 mb-2">Errores Semánticos:</h3>
+                <ul class="list-disc list-inside">
+                    {% for error in errores_semanticos %}
+                        <li class="text-red-600">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        {% if variables %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Variables Declaradas</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white shadow-md rounded-lg">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-300">Variable</th>
+                            <th class="py-2 px-4 border-b border-gray-300">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for variable, valor in variables.items %}
+                        <tr>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ variable }}</td>
+                            <td class="py-2 px-4 border-b border-gray-300">{{ valor }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if resultados %}
+        <div class="mt-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Resultados de las Condiciones</h2>
+            {% if resultados %}
+                <ul class="list-disc list-inside">
+                    {% for resultado in resultados %}
+                        <li class="text-green-600">{{ resultado }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-600">No se evaluaron condiciones o ninguna condición se cumplió.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% endif %}
+    </div>
+</body>
+</html>

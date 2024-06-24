@@ -1,86 +1,46 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    DIVIDE
-    DOT
-    MINUS
-    PLUS
-    TIMES
-
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> package_statement import_statements function_declarations
-Rule 2     package_statement -> KEYWORD_PACKAGE IDENTIFIER SEMICOLON
-Rule 3     import_statements -> import_statement import_statements
-Rule 4     import_statements -> empty
-Rule 5     import_statement -> KEYWORD_IMPORT STRING SEMICOLON
-Rule 6     function_declarations -> function_declaration function_declarations
-Rule 7     function_declarations -> empty
-Rule 8     function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE
-Rule 9     statements -> statement statements
-Rule 10    statements -> empty
-Rule 11    statement -> assignment_statement SEMICOLON
-Rule 12    statement -> function_call_statement SEMICOLON
-Rule 13    assignment_statement -> IDENTIFIER EQ expression
-Rule 14    function_call_statement -> IDENTIFIER LPAREN expression_list RPAREN
-Rule 15    expression_list -> expression
-Rule 16    expression_list -> expression COMMA expression_list
-Rule 17    expression -> NUMBER
-Rule 18    expression -> STRING
-Rule 19    empty -> <empty>
+Rule 1     program -> PR_PACKAGE ID
+Rule 2     program -> PR_IMPORT STRING
+Rule 3     program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE
+Rule 4     statement -> ID DOT ID LEFT_PAREN STRING RIGHT_PAREN
 
 Terminals, with rules where they appear
 
-COMMA                : 16
-DIVIDE               : 
-DOT                  : 
-EQ                   : 13
-IDENTIFIER           : 2 8 13 14
-KEYWORD_FUNC         : 8
-KEYWORD_IMPORT       : 5
-KEYWORD_PACKAGE      : 2
-LBRACE               : 8
-LPAREN               : 8 14
-MINUS                : 
-NUMBER               : 17
-PLUS                 : 
-RBRACE               : 8
-RPAREN               : 8 14
-SEMICOLON            : 2 5 11 12
-STRING               : 5 18
-TIMES                : 
+DOT                  : 4
+ID                   : 1 3 4 4
+LEFT_BRACE           : 3
+LEFT_PAREN           : 3 4
+PR_FUNC              : 3
+PR_IMPORT            : 2
+PR_PACKAGE           : 1
+RIGHT_BRACE          : 3
+RIGHT_PAREN          : 3 4
+STRING               : 2 4
 error                : 
 
 Nonterminals, with rules where they appear
 
-assignment_statement : 11
-empty                : 4 7 10
-expression           : 13 15 16
-expression_list      : 14 16
-function_call_statement : 12
-function_declaration : 6
-function_declarations : 1 6
-import_statement     : 3
-import_statements    : 1 3
-package_statement    : 1
 program              : 0
-statement            : 9
-statements           : 8 9
+statement            : 3
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . program
-    (1) program -> . package_statement import_statements function_declarations
-    (2) package_statement -> . KEYWORD_PACKAGE IDENTIFIER SEMICOLON
+    (1) program -> . PR_PACKAGE ID
+    (2) program -> . PR_IMPORT STRING
+    (3) program -> . PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE
 
-    KEYWORD_PACKAGE shift and go to state 3
+    PR_PACKAGE      shift and go to state 2
+    PR_IMPORT       shift and go to state 3
+    PR_FUNC         shift and go to state 4
 
     program                        shift and go to state 1
-    package_statement              shift and go to state 2
 
 state 1
 
@@ -90,375 +50,121 @@ state 1
 
 state 2
 
-    (1) program -> package_statement . import_statements function_declarations
-    (3) import_statements -> . import_statement import_statements
-    (4) import_statements -> . empty
-    (5) import_statement -> . KEYWORD_IMPORT STRING SEMICOLON
-    (19) empty -> .
+    (1) program -> PR_PACKAGE . ID
 
-    KEYWORD_IMPORT  shift and go to state 7
-    KEYWORD_FUNC    reduce using rule 19 (empty -> .)
-    $end            reduce using rule 19 (empty -> .)
+    ID              shift and go to state 5
 
-    import_statements              shift and go to state 4
-    import_statement               shift and go to state 5
-    empty                          shift and go to state 6
 
 state 3
 
-    (2) package_statement -> KEYWORD_PACKAGE . IDENTIFIER SEMICOLON
+    (2) program -> PR_IMPORT . STRING
 
-    IDENTIFIER      shift and go to state 8
+    STRING          shift and go to state 6
 
 
 state 4
 
-    (1) program -> package_statement import_statements . function_declarations
-    (6) function_declarations -> . function_declaration function_declarations
-    (7) function_declarations -> . empty
-    (8) function_declaration -> . KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE
-    (19) empty -> .
+    (3) program -> PR_FUNC . ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE
 
-    KEYWORD_FUNC    shift and go to state 12
-    $end            reduce using rule 19 (empty -> .)
+    ID              shift and go to state 7
 
-    function_declarations          shift and go to state 9
-    function_declaration           shift and go to state 10
-    empty                          shift and go to state 11
 
 state 5
 
-    (3) import_statements -> import_statement . import_statements
-    (3) import_statements -> . import_statement import_statements
-    (4) import_statements -> . empty
-    (5) import_statement -> . KEYWORD_IMPORT STRING SEMICOLON
-    (19) empty -> .
+    (1) program -> PR_PACKAGE ID .
 
-    KEYWORD_IMPORT  shift and go to state 7
-    KEYWORD_FUNC    reduce using rule 19 (empty -> .)
-    $end            reduce using rule 19 (empty -> .)
+    $end            reduce using rule 1 (program -> PR_PACKAGE ID .)
 
-    import_statement               shift and go to state 5
-    import_statements              shift and go to state 13
-    empty                          shift and go to state 6
 
 state 6
 
-    (4) import_statements -> empty .
+    (2) program -> PR_IMPORT STRING .
 
-    KEYWORD_FUNC    reduce using rule 4 (import_statements -> empty .)
-    $end            reduce using rule 4 (import_statements -> empty .)
+    $end            reduce using rule 2 (program -> PR_IMPORT STRING .)
 
 
 state 7
 
-    (5) import_statement -> KEYWORD_IMPORT . STRING SEMICOLON
+    (3) program -> PR_FUNC ID . LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE
 
-    STRING          shift and go to state 14
+    LEFT_PAREN      shift and go to state 8
 
 
 state 8
 
-    (2) package_statement -> KEYWORD_PACKAGE IDENTIFIER . SEMICOLON
+    (3) program -> PR_FUNC ID LEFT_PAREN . RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE
 
-    SEMICOLON       shift and go to state 15
+    RIGHT_PAREN     shift and go to state 9
 
 
 state 9
 
-    (1) program -> package_statement import_statements function_declarations .
+    (3) program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN . LEFT_BRACE statement RIGHT_BRACE
 
-    $end            reduce using rule 1 (program -> package_statement import_statements function_declarations .)
+    LEFT_BRACE      shift and go to state 10
 
 
 state 10
 
-    (6) function_declarations -> function_declaration . function_declarations
-    (6) function_declarations -> . function_declaration function_declarations
-    (7) function_declarations -> . empty
-    (8) function_declaration -> . KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE
-    (19) empty -> .
+    (3) program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE . statement RIGHT_BRACE
+    (4) statement -> . ID DOT ID LEFT_PAREN STRING RIGHT_PAREN
 
-    KEYWORD_FUNC    shift and go to state 12
-    $end            reduce using rule 19 (empty -> .)
+    ID              shift and go to state 11
 
-    function_declaration           shift and go to state 10
-    function_declarations          shift and go to state 16
-    empty                          shift and go to state 11
+    statement                      shift and go to state 12
 
 state 11
 
-    (7) function_declarations -> empty .
+    (4) statement -> ID . DOT ID LEFT_PAREN STRING RIGHT_PAREN
 
-    $end            reduce using rule 7 (function_declarations -> empty .)
+    DOT             shift and go to state 13
 
 
 state 12
 
-    (8) function_declaration -> KEYWORD_FUNC . IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE
+    (3) program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement . RIGHT_BRACE
 
-    IDENTIFIER      shift and go to state 17
+    RIGHT_BRACE     shift and go to state 14
 
 
 state 13
 
-    (3) import_statements -> import_statement import_statements .
+    (4) statement -> ID DOT . ID LEFT_PAREN STRING RIGHT_PAREN
 
-    KEYWORD_FUNC    reduce using rule 3 (import_statements -> import_statement import_statements .)
-    $end            reduce using rule 3 (import_statements -> import_statement import_statements .)
+    ID              shift and go to state 15
 
 
 state 14
 
-    (5) import_statement -> KEYWORD_IMPORT STRING . SEMICOLON
+    (3) program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE .
 
-    SEMICOLON       shift and go to state 18
+    $end            reduce using rule 3 (program -> PR_FUNC ID LEFT_PAREN RIGHT_PAREN LEFT_BRACE statement RIGHT_BRACE .)
 
 
 state 15
 
-    (2) package_statement -> KEYWORD_PACKAGE IDENTIFIER SEMICOLON .
+    (4) statement -> ID DOT ID . LEFT_PAREN STRING RIGHT_PAREN
 
-    KEYWORD_IMPORT  reduce using rule 2 (package_statement -> KEYWORD_PACKAGE IDENTIFIER SEMICOLON .)
-    KEYWORD_FUNC    reduce using rule 2 (package_statement -> KEYWORD_PACKAGE IDENTIFIER SEMICOLON .)
-    $end            reduce using rule 2 (package_statement -> KEYWORD_PACKAGE IDENTIFIER SEMICOLON .)
+    LEFT_PAREN      shift and go to state 16
 
 
 state 16
 
-    (6) function_declarations -> function_declaration function_declarations .
+    (4) statement -> ID DOT ID LEFT_PAREN . STRING RIGHT_PAREN
 
-    $end            reduce using rule 6 (function_declarations -> function_declaration function_declarations .)
+    STRING          shift and go to state 17
 
 
 state 17
 
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER . LPAREN RPAREN LBRACE statements RBRACE
+    (4) statement -> ID DOT ID LEFT_PAREN STRING . RIGHT_PAREN
 
-    LPAREN          shift and go to state 19
+    RIGHT_PAREN     shift and go to state 18
 
 
 state 18
 
-    (5) import_statement -> KEYWORD_IMPORT STRING SEMICOLON .
+    (4) statement -> ID DOT ID LEFT_PAREN STRING RIGHT_PAREN .
 
-    KEYWORD_IMPORT  reduce using rule 5 (import_statement -> KEYWORD_IMPORT STRING SEMICOLON .)
-    KEYWORD_FUNC    reduce using rule 5 (import_statement -> KEYWORD_IMPORT STRING SEMICOLON .)
-    $end            reduce using rule 5 (import_statement -> KEYWORD_IMPORT STRING SEMICOLON .)
-
-
-state 19
-
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN . RPAREN LBRACE statements RBRACE
-
-    RPAREN          shift and go to state 20
-
-
-state 20
-
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN . LBRACE statements RBRACE
-
-    LBRACE          shift and go to state 21
-
-
-state 21
-
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE . statements RBRACE
-    (9) statements -> . statement statements
-    (10) statements -> . empty
-    (11) statement -> . assignment_statement SEMICOLON
-    (12) statement -> . function_call_statement SEMICOLON
-    (19) empty -> .
-    (13) assignment_statement -> . IDENTIFIER EQ expression
-    (14) function_call_statement -> . IDENTIFIER LPAREN expression_list RPAREN
-
-    RBRACE          reduce using rule 19 (empty -> .)
-    IDENTIFIER      shift and go to state 22
-
-    statements                     shift and go to state 23
-    statement                      shift and go to state 24
-    empty                          shift and go to state 25
-    assignment_statement           shift and go to state 26
-    function_call_statement        shift and go to state 27
-
-state 22
-
-    (13) assignment_statement -> IDENTIFIER . EQ expression
-    (14) function_call_statement -> IDENTIFIER . LPAREN expression_list RPAREN
-
-    EQ              shift and go to state 28
-    LPAREN          shift and go to state 29
-
-
-state 23
-
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements . RBRACE
-
-    RBRACE          shift and go to state 30
-
-
-state 24
-
-    (9) statements -> statement . statements
-    (9) statements -> . statement statements
-    (10) statements -> . empty
-    (11) statement -> . assignment_statement SEMICOLON
-    (12) statement -> . function_call_statement SEMICOLON
-    (19) empty -> .
-    (13) assignment_statement -> . IDENTIFIER EQ expression
-    (14) function_call_statement -> . IDENTIFIER LPAREN expression_list RPAREN
-
-    RBRACE          reduce using rule 19 (empty -> .)
-    IDENTIFIER      shift and go to state 22
-
-    statement                      shift and go to state 24
-    statements                     shift and go to state 31
-    empty                          shift and go to state 25
-    assignment_statement           shift and go to state 26
-    function_call_statement        shift and go to state 27
-
-state 25
-
-    (10) statements -> empty .
-
-    RBRACE          reduce using rule 10 (statements -> empty .)
-
-
-state 26
-
-    (11) statement -> assignment_statement . SEMICOLON
-
-    SEMICOLON       shift and go to state 32
-
-
-state 27
-
-    (12) statement -> function_call_statement . SEMICOLON
-
-    SEMICOLON       shift and go to state 33
-
-
-state 28
-
-    (13) assignment_statement -> IDENTIFIER EQ . expression
-    (17) expression -> . NUMBER
-    (18) expression -> . STRING
-
-    NUMBER          shift and go to state 35
-    STRING          shift and go to state 36
-
-    expression                     shift and go to state 34
-
-state 29
-
-    (14) function_call_statement -> IDENTIFIER LPAREN . expression_list RPAREN
-    (15) expression_list -> . expression
-    (16) expression_list -> . expression COMMA expression_list
-    (17) expression -> . NUMBER
-    (18) expression -> . STRING
-
-    NUMBER          shift and go to state 35
-    STRING          shift and go to state 36
-
-    expression_list                shift and go to state 37
-    expression                     shift and go to state 38
-
-state 30
-
-    (8) function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE .
-
-    KEYWORD_FUNC    reduce using rule 8 (function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE .)
-    $end            reduce using rule 8 (function_declaration -> KEYWORD_FUNC IDENTIFIER LPAREN RPAREN LBRACE statements RBRACE .)
-
-
-state 31
-
-    (9) statements -> statement statements .
-
-    RBRACE          reduce using rule 9 (statements -> statement statements .)
-
-
-state 32
-
-    (11) statement -> assignment_statement SEMICOLON .
-
-    IDENTIFIER      reduce using rule 11 (statement -> assignment_statement SEMICOLON .)
-    RBRACE          reduce using rule 11 (statement -> assignment_statement SEMICOLON .)
-
-
-state 33
-
-    (12) statement -> function_call_statement SEMICOLON .
-
-    IDENTIFIER      reduce using rule 12 (statement -> function_call_statement SEMICOLON .)
-    RBRACE          reduce using rule 12 (statement -> function_call_statement SEMICOLON .)
-
-
-state 34
-
-    (13) assignment_statement -> IDENTIFIER EQ expression .
-
-    SEMICOLON       reduce using rule 13 (assignment_statement -> IDENTIFIER EQ expression .)
-
-
-state 35
-
-    (17) expression -> NUMBER .
-
-    SEMICOLON       reduce using rule 17 (expression -> NUMBER .)
-    COMMA           reduce using rule 17 (expression -> NUMBER .)
-    RPAREN          reduce using rule 17 (expression -> NUMBER .)
-
-
-state 36
-
-    (18) expression -> STRING .
-
-    SEMICOLON       reduce using rule 18 (expression -> STRING .)
-    COMMA           reduce using rule 18 (expression -> STRING .)
-    RPAREN          reduce using rule 18 (expression -> STRING .)
-
-
-state 37
-
-    (14) function_call_statement -> IDENTIFIER LPAREN expression_list . RPAREN
-
-    RPAREN          shift and go to state 39
-
-
-state 38
-
-    (15) expression_list -> expression .
-    (16) expression_list -> expression . COMMA expression_list
-
-    RPAREN          reduce using rule 15 (expression_list -> expression .)
-    COMMA           shift and go to state 40
-
-
-state 39
-
-    (14) function_call_statement -> IDENTIFIER LPAREN expression_list RPAREN .
-
-    SEMICOLON       reduce using rule 14 (function_call_statement -> IDENTIFIER LPAREN expression_list RPAREN .)
-
-
-state 40
-
-    (16) expression_list -> expression COMMA . expression_list
-    (15) expression_list -> . expression
-    (16) expression_list -> . expression COMMA expression_list
-    (17) expression -> . NUMBER
-    (18) expression -> . STRING
-
-    NUMBER          shift and go to state 35
-    STRING          shift and go to state 36
-
-    expression                     shift and go to state 38
-    expression_list                shift and go to state 41
-
-state 41
-
-    (16) expression_list -> expression COMMA expression_list .
-
-    RPAREN          reduce using rule 16 (expression_list -> expression COMMA expression_list .)
+    RIGHT_BRACE     reduce using rule 4 (statement -> ID DOT ID LEFT_PAREN STRING RIGHT_PAREN .)
 
